@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/html2canvas/build/html2canvas.js"></script>
+        
+    </head>
+    <body>
+    <script>
+            let fonts=['Flamenco','Antic Slab','Bitter','Slabo 13px'];
+            let embedding="";
+            fonts.forEach((f)=>{
+                embedding+=f.replace(/\s/g,'+')+"|";
+                $('body').append(`<h1 style="font-family:'${f}'">${f}</h1>`);
+            });
+            $('head').append(`<link href="https://fonts.googleapis.com/css?family=${embedding}" rel="stylesheet">`);
+
+            setTimeout(()=>{
+                $('h1').each(function(){
+                    html2canvas(this,{
+                        onrendered: function(canvas) {
+                            $('body').append(canvas);
+                        }
+                    });
+                });
+            },500);
+        </script>
+    </body>
+</html>
