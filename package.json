@@ -1,0 +1,25 @@
+{
+  "name": "gf-to-image",
+  "version": "1.0.0",
+  "description": "Generate a image from a Google font. Meant for font selection/preview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wewearglasses/gf-to-image.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wewearglasses/gf-to-image/issues"
+  },
+  "homepage": "https://github.com/wewearglasses/gf-to-image#readme",
+  "dependencies": {
+    "file-saver": "^1.3.3",
+    "html2canvas": "^0.5.0-beta4",
+    "jquery": "^3.2.1",
+    "jszip": "^3.1.4"
+  }
+}
