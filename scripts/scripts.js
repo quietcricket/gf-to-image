@@ -7,7 +7,6 @@ function init() {
         let k = keys[i];
         let v = localStorage.getItem(k);
         v = v ? v : defaults[i];
-        console.log(v);
         document.querySelector('#' + k).value = v;
     }
     update();
@@ -51,7 +50,7 @@ function save() {
         let p = (max_height - ele.offsetHeight) / 2;
         ele.style.paddingTop = ele.style.paddingBottom = p;
     }
-    for(let c of document.querySelectorAll('canvas')){
+    for (let c of document.querySelectorAll('canvas')) {
         c.parentNode.removeChild(c);
     }
     for (let ele of samples) {
@@ -60,7 +59,6 @@ function save() {
             onrendered: (canvas) => {
                 document.body.appendChild(canvas);
                 let content = canvas.toDataURL('image/png');
-                console.log(content);
                 content = content.substr(content.indexOf(','));
 
                 zip.file(ele.getAttribute('font') + '.png', content, {base64: true});
@@ -78,4 +76,4 @@ function change_value(ele) {
     update();
 }
 
-init();
+setTimeout(init, 100);
