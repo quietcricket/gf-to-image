@@ -1,28 +1,54 @@
 <html>
 
     <head>
-        <script src="node_modules/jquery/dist/jquery.js"></script>
-        <script src="node_modules/html2canvas/dist/html2canvas.js"></script>
-        <script src="node_modules/jszip/dist/jszip.js"></script>
-        <script src="node_modules/file-saver/FileSaver.js"></script>
+        <script src="/scripts/html2canvas.min.js"></script>
+        <script src="/scripts/jszip.min.js"></script>
+        <script src="/scripts/FileSaver.min.js"></script>
+        <link rel="stylesheet"/>
         <style>
-            h1 {
-                display: inline-block;
-                vertical-align: top;
-                margin-right: 15px;
+            * {
+                font-family: serif;
                 -webkit-font-smoothing: antialiased;
             }
 
-            canvas {
+            h1 {
+                display: inline-block;
                 margin-right: 15px;
             }
+
+            label {
+                width: 120px;
+                display: inline-block;
+            }
+
+            input, button {
+                font-size: 16px;
+                margin-bottom: 1em;
+            }
+
+            input[type=text] {
+                width: 300px;
+            }
+
         </style>
     </head>
 
     <body>
-        <input onchange="change_text(this);" value="" placeholder="Preview Text"/>
+        <h2>Generate preview image for Google Fonts</h2>
+        <label for="fonts">Fonts: </label>
+        <input type="text" id="fonts" value="" onchange="change_value(this)" placeholder="Fonts"/>
+        <br/>
+        <label for="preview">Preview Text: </label>
+        <input type="text" id="preview" onchange="change_value(this);" value="" placeholder="Preview Text"/>
+        <br/>
+        <label for="size">Font Size: </label>
+        <input type="number" id="size" onchange="change_value(this);" value="" placeholder="Font Size"/>
+        <br/>
+        <label for="color">Text Color: </label>
+        <input type="color" id="color" onchange="change_value(this)" value="" placeholder="Text Color"/>
+        <br/>
         <button onclick="save()">Save</button>
         <div class="holder"></div>
-        <script src="scripts.js"></script>
+        <script src="scripts/scripts.js"></script>
     </body>
 </html>
