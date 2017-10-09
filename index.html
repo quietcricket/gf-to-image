@@ -1,38 +1,28 @@
 <html>
+
     <head>
         <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="node_modules/html2canvas/dist/html2canvas.js"></script>
         <script src="node_modules/jszip/dist/jszip.js"></script>
         <script src="node_modules/file-saver/FileSaver.js"></script>
-        <style>h1{display: inline-block;}</style>
+        <style>
+            h1 {
+                display: inline-block;
+                vertical-align: top;
+                margin-right: 15px;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            canvas {
+                margin-right: 15px;
+            }
+        </style>
     </head>
+
     <body>
-    <script>
-        let zip=new JSZip();
-        let fonts=['Flamenco','Antic Slab','Bitter','Slabo 13px'];
-        let embedding="";
-        fonts.forEach((f)=>{
-            embedding+=f.replace(/\s/g,'+')+"|";
-            $('body').append(`<h1 style="font-family:'${f}'" font='${f}' >${f}</h1>`);
-        });
-        $('head').append(`<link href="https://fonts.googleapis.com/css?family=${embedding}" rel="stylesheet">`);
-        let total=fonts.length;
-        $(window).on('load',function(){
-                $('h1').each(function(){
-                html2canvas(this,{
-                    width:$(this).width(),
-                    onrendered: (canvas)=> {
-                        $('body').append(canvas);
-                        console.log(canvas.toDataURL('image/png'));
-                        zip.file(this.getAttribute('font')+'.png',canvas.toDataURL('image/png').substr(22),{base64:true});
-                        total--;
-                        if(total==0){
-                            zip.generateAsync({type:'blob'}).then((content)=>{saveAs(content,'fonts.zip')});
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-</body>
+        <input onchange="change_text(this);" value="" placeholder="Preview Text"/>
+        <button onclick="save()">Save</button>
+        <div class="holder"></div>
+        <script src="scripts.js"></script>
+    </body>
 </html>
