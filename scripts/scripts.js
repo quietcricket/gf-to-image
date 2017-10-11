@@ -50,25 +50,25 @@ function save() {
         let p = (max_height - ele.offsetHeight) / 2;
         ele.style.paddingTop = ele.style.paddingBottom = p;
     }
-    for (let c of document.querySelectorAll('canvas')) {
-        c.parentNode.removeChild(c);
-    }
-    for (let ele of samples) {
-        let config = {
-            width: ele.offsetWidth,
-            onrendered: (canvas) => {
-                document.body.appendChild(canvas);
-                let content = canvas.toDataURL('image/png');
-                content = content.substr(content.indexOf(','));
+    save_one();
+}
 
-                zip.file(ele.getAttribute('font') + '.png', content, {base64: true});
-                if (--queue == 0) {
-                    zip.generateAsync({type: 'blob'}).then((content) => saveAs(content, 'fonts.zip'));
-                }
+function save_one() {
+    let ele = document.querySelector(`h1:nth-child(${queue})`);
+    let config = {
+        width: ele.offsetWidth,
+        onrendered: (canvas) => {
+            let content = canvas.toDataURL('image/png');
+            content = content.substr(content.indexOf(','));
+            zip.file(ele.getAttribute('font') + '.png', content, {base64: true});
+            if (--queue == 0) {
+                zip.generateAsync({type: 'blob'}).then((content) => saveAs(content, 'fonts.zip'));
+            } else {
+                this.save_one();
             }
-        };
-        html2canvas(ele, config);
-    }
+        }
+    };
+    html2canvas(ele, config);
 }
 
 function change_value(ele) {
