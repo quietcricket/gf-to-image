@@ -52,12 +52,15 @@ function save(big_one) {
     for (let ele of samples) {
         let p = (max_height - ele.offsetHeight) / 2;
         ele.style.paddingTop = ele.style.paddingBottom = p;
+        ele.style.width=max_width+5;
     }
     if(big_one){
         html2canvas(document.querySelector('.holder'),{
             width:max_width, 
-            background:'#ffffff',
-            onrendered:canvas=>canvas.toBlob(blob=>saveAs(blob,'fonts-preview.png'),'image/png')
+            onrendered:canvas=>{
+                canvas.toBlob(blob=>saveAs(blob,'fonts-preview.png'),'image/png');
+                document.querySelector('.summary').innerHTML=`Total: ${samples.length}<br/>Width: ${max_width}<br/>Height:${max_height}<br/>Total Height: ${samples.length*max_height}`;
+            }
         });
     }else{
         save_one();
