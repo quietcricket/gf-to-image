@@ -31,6 +31,7 @@ function update() {
         ele.setAttribute('font', f);
         ele.innerHTML = preview != "" ? preview : f;
         holder.appendChild(ele);
+        holder.appendChild(document.createElement('br'));
     }
     let css_node = document.querySelector('link');
     css_node.setAttribute('href', 'https://fonts.googleapis.com/css?family=' + embedding.join('|'));
@@ -38,23 +39,34 @@ function update() {
 }
 
 
-function save() {
+function save(big_one) {
     let samples = document.querySelectorAll('h1');
     window.queue = samples.length;
-    let max_height;
+    let max_height=0;
+    let max_width=0;
 
     for (let ele of samples) {
-        max_height = Math.max(ele.offsetHeight);
+        max_height = Math.max(max_height, ele.offsetHeight);
+        max_width=Math.max(max_width, ele.offsetWidth);
     }
     for (let ele of samples) {
         let p = (max_height - ele.offsetHeight) / 2;
         ele.style.paddingTop = ele.style.paddingBottom = p;
     }
-    save_one();
+    if(big_one){
+        html2canvas(document.querySelector('.holder'),{
+            width:max_width, 
+            background:'#ffffff',
+            onrendered:canvas=>canvas.toBlob(blob=>saveAs(blob,'fonts-preview.png'),'image/png')
+        });
+    }else{
+        save_one();
+    }
 }
 
+
 function save_one() {
-    let ele = document.querySelector(`h1:nth-child(${queue})`);
+    let ele = document.querySelectorAll('.holder h1')[queue-1];
     let config = {
         width: ele.offsetWidth,
         onrendered: (canvas) => {
